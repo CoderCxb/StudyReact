@@ -1,24 +1,27 @@
-import Home from './../Home/Home';
 import './App.css';
-import axios from 'axios';
-import React, { Component } from 'react';
+import React, { Children, Component } from 'react';
+import { Router, Route, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import LifeCycle from '../LifeCycle/LifeCycle';
+import HttpRequest from '../HttpRequest/HttpRequest';
+const history = createBrowserHistory();
+let template = (
+	<div className="App">
+		<Router history={history}>
+			<Link to="/life-cycle">生命周期</Link>
+			<Link to="/http-request">网络请求</Link>
+			{/* <Link to=''></Link> */}
+
+			{/* <Route></Route> */}
+			<Route path="/life-cycle" component={LifeCycle}></Route>
+			<Route path="/http-request" component={HttpRequest}></Route>
+		</Router>
+	</div>
+);
 
 class App extends Component {
-	componentDidMount(){
-
-		axios.get('http://localhost:3000/core/test').then(data=>{
-			console.log(data);
-		})
-		axios.get('http://localhost:3000/chat/test').then(data=>{
-			console.log(data);
-		})
-	}
 	render() {
-		return (
-			<div className="App">
-				<Home src=""></Home>
-			</div>
-		);
+		return template;
 	}
 }
 
