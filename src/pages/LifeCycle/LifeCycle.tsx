@@ -80,7 +80,7 @@ class LifeCycle extends Component<any> {
 			return { name: 'polo' };
 		});
 		// 获取组件间的子组件 <Parent>子组件</Parent>
-		console.log(this.props.children);
+		console.log(this.props);
 
 		// 强制刷新页面 会跳过shouldComponentUpdate方法 但是子组件生命周期正常
 		// this.forceUpdate();
