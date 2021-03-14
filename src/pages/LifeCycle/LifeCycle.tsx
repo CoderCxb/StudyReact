@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, ComponentProps } from 'react';
+import { RouteComponentProps, RouteProps, RouterProps } from 'react-router';
 interface LifeCycleState {
 	name: string;
 }
@@ -7,10 +8,12 @@ interface LifeCycleProps {
 	title: string;
 }
 
-class LifeCycle extends Component<any> {
+type Props=Partial<LifeCycleProps&RouteComponentProps>;
+
+class LifeCycle extends Component<Props> {
 	state: LifeCycleState = { name: 'marco' };
 
-	constructor(props: LifeCycleProps) {
+	constructor(props: Props) {
 		super(props);
 		// 构造函数主要用于初始化state和为方法绑定this执行 如果不需要 可以不用写构造函数 并且不要调用setState方法 构造函数可以直接初始化state
 		console.log('构造函数');
@@ -60,7 +63,7 @@ class LifeCycle extends Component<any> {
 			<div>
 				<h4>演示生命周期函数</h4>
 				{this.state.name}
-				{this.props.t}
+				{this.props}
 				<button onClick={this.changeName}>修改state</button>
 			</div>
 		);
