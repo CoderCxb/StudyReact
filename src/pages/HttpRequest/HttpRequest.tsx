@@ -11,6 +11,8 @@ class HttpRequest extends Component {
 	// 	});
 	// }
 	render() {
+		console.log(this);
+		
 		return <div>发送请求页面</div>;
 	}
 }

@@ -1,47 +1,39 @@
 import './App.css';
-import React, { Component, createContext } from 'react';
-import { Router, Route, Link, Redirect, Switch } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Router, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import LifeCycle from '../LifeCycle/LifeCycle';
 import HttpRequest from '../HttpRequest/HttpRequest';
-import ShowRouter from '../ShowRouter/ShowRouter';
-import UseHooks from '../UseHooks/UseHooks';
-import { context, contextContent } from '../context';
+import UseRedux from '../UseRedux/UseRedux';
+import { Provider } from 'react-redux';
+import goods from '../../redux/goods/goods';
+
 const history = createBrowserHistory();
-let template = (
-	<div className="App">
-		<Router history={history}>
-			<Link to="/life-cycle">生命周期</Link>
-			<Link to="/http-request">网络请求</Link>
-			<Link
-				to={{
-					pathname: '/show-router/2',
-					search: 'name=marco',
-				}}
-			>
-				演示路由
-			</Link>
-			<Link to="/use-hooks">使用Hooks</Link>
-
-			{/* <Redirect to="/http-request"></Redirect> */}
-
-			{/* <Route></Route> */}
-			<Switch>
-				<Route path="/life-cycle" component={LifeCycle}></Route>
-				<Route path="/http-request" component={HttpRequest}></Route>
-				<Route path="/show-router/:id" component={ShowRouter}></Route>
-				<context.Provider value={contextContent}>
-					<Route path="/use-hooks" component={UseHooks}></Route>
-				</context.Provider>
-				<Route exact path="/*" component={() => <div>主页</div>}></Route>
-			</Switch>
-		</Router>
-	</div>
-);
 
 class App extends Component {
+	goLifeCycle = () => {
+		history.push('/life-cycle');
+	};
 	render() {
-		return template;
+		return (
+			<div className="App">
+				<Router history={history}>
+					<Link to="/life-cycle">生命周期</Link>
+					<Link to="/http-request">网络请求</Link>
+					<Link to="/use-redux">使用redux</Link>
+					<button onClick={this.goLifeCycle}>测试</button>
+
+					<Route path="/life-cycle" component={LifeCycle}></Route>
+					<Route path="/http-request" component={HttpRequest}></Route>
+					{/* <Route path="/use-redux" component={UseRedux}></Route> */}
+
+					{/* <Redirect to="/xxx"></Redirect> */}
+				</Router>
+				<Provider store={goods}>
+					<UseRedux />
+				</Provider>
+			</div>
+		);
 	}
 }
 
