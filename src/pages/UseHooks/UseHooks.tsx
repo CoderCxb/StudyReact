@@ -19,12 +19,17 @@ export default function UseHooks() {
 	// 尽可能使用标准的 useEffect 以避免阻塞视觉更新。
 	useLayoutEffect(() => {
 		console.log('useLayoutEffect监听count++:', count);
+		
 	});
+	
 	// useEffect 用于监听某个state的改变,并且是延迟执行
-	useEffect(() => {
+	let xx=useEffect(() => {
 		console.log('useEffect监听count++:', count);
+		return ()=>{
+			console.log("XXX");
+		}
 	});
-
+	console.log(xx);
 	function addBook() {
 		// setBooks((preState) => {
 		// 	return [...preState, inputBook.current.value];

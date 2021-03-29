@@ -1,46 +1,40 @@
-import React, { Component } from 'react';
+import React, { Dispatch, useState} from 'react';
 import {connect} from 'react-redux';
-import { Good } from '../../redux/goods/types';
-import good from "../../redux/goods/goods"
-import {addGood,deleteGood} from '../../redux/goods/actions';
+import { GoodType } from '../../redux/goods/actionType';
+import {addGoodAction,deteleGoodAction} from '../../redux/goods/action'
 
 
-class UseRedux extends Component<any> {
-  state={
-    id:0
-  };
-  render() {
-    console.log(this.props);
-    
-    return (
-      <div>
-        <button onClick={()=>{
-          this.props.addGood({id:this.state.id++,name:'Apple',type:'phone'});
-        }}>添加商品</button>
-        <button onClick={()=>{
-          this.props.deleteGood(1);
-        }}>添加商品</button>
-        <ul>
-          {this.props.goods.map((item:Good)=>{
-            return <li key={item.id}>{item.id+item.name}</li>
-          })}
-        </ul>
-      </div>
-    );
+const UseRedux = function(props:any) {
+  let id=0;
+  // let [goods,setGoods]=useState([]);
+  const addGood = () =>{
+    console.log(props.goods)
+    props.addGood({id:id++,name:'phone'});
+    // setGoods(props.goods);
+    console.log(props.goods)
   }
-  componentDidMount(){
-     good.subscribe(()=>{
-       this.setState({})
-     })
-  }
+  return (
+    <div>
+      <button onClick={addGood}>添加商品</button>
+      <ul>
+        {/* {props.goods.forEach((good:GoodType)=><li>
+          {good.id} ---- {good.name}
+        </li>)} */}
+        {props.goods.map((good:GoodType)=><li key={id++}>{good.name}</li>)}
+      </ul>
+    </div>
+  );
 }
 
-
-export default connect((state)=>{
-  return {goods:state}
-},()=>{
+const mapStateToProps=(state:any)=>{
   return {
-    addGood,
-    deleteGood
+    goods:state.goods
   }
-})(UseRedux);
+}
+const mapDispatchToProps = (dispatch:Dispatch<any>) => {
+  return {
+    addGood:(good:GoodType)=>dispatch(addGoodAction(good)),
+    deteleGoodAction:(id:number)=>dispatch(deteleGoodAction(id))
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(UseRedux);
