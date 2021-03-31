@@ -63,7 +63,6 @@ class LifeCycle extends Component<Props> {
 			<div>
 				<h4>演示生命周期函数</h4>
 				{this.state.name}
-				{this.props}
 				<button onClick={this.changeName}>修改state</button>
 			</div>
 		);
