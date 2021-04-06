@@ -1,4 +1,5 @@
 import React, {
+	createRef,
 	MutableRefObject,
 	useContext,
 	useEffect,
@@ -6,7 +7,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { context, contextContent } from '../context';
+import { context } from '../context';
 
 export default function UseHooks() {
 	// useState 用于添加内部state 返回值是数组[state值,设置state函数] 可接受泛型
@@ -37,11 +38,15 @@ export default function UseHooks() {
 		setBooks([...books, inputBook.current.value]);
 	}
 	const uContext = useContext(context);
-	function update() {
+	function update() {  
 		uContext.frame = 'vue';
 	}
+	let ul=createRef<any>();
+	console.log(ul);
+	
 	return (
 		<div>
+			<HookSon count={count}></HookSon>
 			<div>
 				<button
 					onClick={() => {
@@ -53,7 +58,7 @@ export default function UseHooks() {
 			</div>
 			<div>当前计数:{count}</div>
 
-			<ul>
+			<ul ref={ul}>
 				{books.map((book) => (
 					<li key={book}>{book}</li>
 				))}
@@ -70,4 +75,10 @@ export default function UseHooks() {
 			<button onClick={update}>升级</button>
 		</div>
 	);
+}
+
+
+function HookSon(props:any){
+	console.log('Hook的子组件');
+	return <div></div>
 }

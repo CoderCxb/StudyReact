@@ -7,24 +7,48 @@ import HttpRequest from '../HttpRequest/HttpRequest';
 import { Provider } from 'react-redux';
 import UseHooks from '../UseHooks/UseHooks';
 import UseRedux from '../UseRedux/UseRedux';
+import UseAntd from '../UseAntd/UseAntd';
 import {store} from '../../redux';
+import {context, contextContent } from '../context';
+import UseContext from '../UseContext/UseContext';
 
 const history = createBrowserHistory();
 
 class App extends Component {
+	static getDerivedStateFromError(error:Error) {
+		console.log(error);
+    // 更新 state 使下一次渲染能够显示降级后的 UI
+    // return { hasError: true };
+  }
+	componentDidCatch(error:Error, errorInfo:any) {
+    // 你同样可以将错误日志上报给服务器
+    console.log(error, errorInfo);
+  }
 	goLifeCycle = () => {
 		history.push('/life-cycle');
 	};
+	lf:any;
+	componentDidMount(){
+		console.log(this.lf);
+	}
 	render() {
 		return (
 			<div className="App">
+				<input type="text"/>
+				<context.Provider value={contextContent}>
+					{/* Context的用法一 */}
+					{/* <context.Consumer>
+						{value=><UseContext {...value}></UseContext>}
+					</context.Consumer> */}
+					<UseContext></UseContext>
+				</context.Provider>
 				<Router history={history}>
 					<Link to="/life-cycle">生命周期</Link>
 					<Link to="/http-request">网络请求</Link>
 					<Link to="/use-redux">使用redux</Link>
 					<Link to="/use-hooks">使用hooks</Link>
 
-					<Route path="/life-cycle" component={LifeCycle}></Route>
+					<Route path="/life-cycle" ref={lf=>this.lf=lf} component={LifeCycle}></Route>
 					<Route path="/http-request" component={HttpRequest}></Route>
 					<Route path="/use-hooks" component={UseHooks}></Route>
 					{/* <Route path="/use-redux" component={UseRedux}></Route> */}
@@ -34,6 +58,7 @@ class App extends Component {
 				<Provider store={store}>
 					<UseRedux />
 				</Provider>
+				<UseAntd></UseAntd>  
 			</div>
 		);
 	}

@@ -78,6 +78,7 @@ class LifeCycle extends Component<Props> {
 		// 2. 由于setState不是立即执行 因此设置完直接使用 无法获取最新的state
 		// 3. 建议在componentDidUpdate中
 		// 4. 建议setState接收的第一个参数为函数
+		// 注意: 传入的必须是一个新的对象 如果将修改完的state对象传入 则还是不会更新
 		this.setState((state) => {
 			return { name: 'polo' };
 		});
