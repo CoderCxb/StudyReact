@@ -7,17 +7,26 @@ import HttpRequest from '../HttpRequest/HttpRequest';
 import { Provider } from 'react-redux';
 import UseHooks from '../UseHooks/UseHooks';
 import UseRedux from '../UseRedux/UseRedux';
-import {store} from '../../redux';
+import { store } from '../../redux';
+import Base from '../Base/Base';
+import { MyContext, defaultContext } from '../context';
+import UseContext from '../UseContext/UseContext';
 
 const history = createBrowserHistory();
 
 class App extends Component {
+	state = {
+		name: 'xxxx',
+	};
 	goLifeCycle = () => {
 		history.push('/life-cycle');
 	};
 	render() {
 		return (
 			<div className="App">
+				<MyContext.Provider value={defaultContext}>
+					<UseContext></UseContext>
+				</MyContext.Provider>
 				<Router history={history}>
 					<Link to="/life-cycle">生命周期</Link>
 					<Link to="/http-request">网络请求</Link>
@@ -34,6 +43,7 @@ class App extends Component {
 				<Provider store={store}>
 					<UseRedux />
 				</Provider>
+				<Base></Base>
 			</div>
 		);
 	}
