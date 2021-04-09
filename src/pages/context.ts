@@ -1,12 +1,13 @@
 import { createContext } from 'react';
 
-const contextContent = {
+const defaultContext = {
 	frame: 'React',
 	info: {
 		why: 'study',
 		version: 1.0,
 	},
 };
-const context = createContext(contextContent);
+// 默认值
+const MyContext = createContext(defaultContext);
 
-export { context, contextContent };
+export { MyContext, defaultContext };

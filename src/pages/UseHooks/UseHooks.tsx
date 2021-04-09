@@ -7,7 +7,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { context } from '../context';
+import { MyContext } from '../context';
 
 export default function UseHooks() {
 	// useState 用于添加内部state 返回值是数组[state值,设置state函数] 可接受泛型
@@ -24,20 +24,22 @@ export default function UseHooks() {
 	});
 	
 	// useEffect 用于监听某个state的改变,并且是延迟执行
-	let xx=useEffect(() => {
+	useEffect(() => {
 		console.log('useEffect监听count++:', count);
 		return ()=>{
 			console.log("XXX");
 		}
-	});
-	console.log(xx);
+	},[count]);
+	useEffect(()=>{
+		console.log('effect2执行');
+	},[])
 	function addBook() {
 		// setBooks((preState) => {
 		// 	return [...preState, inputBook.current.value];
 		// });
 		setBooks([...books, inputBook.current.value]);
 	}
-	const uContext = useContext(context);
+	const uContext = useContext(MyContext);
 	function update() {  
 		uContext.frame = 'vue';
 	}

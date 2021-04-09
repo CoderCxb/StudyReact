@@ -8,7 +8,7 @@ interface LifeCycleProps {
 	title: string;
 }
 
-type Props=Partial<LifeCycleProps&RouteComponentProps>;
+type Props = Partial<LifeCycleProps & RouteComponentProps>;
 
 class LifeCycle extends Component<Props> {
 	state: LifeCycleState = { name: 'marco' };
@@ -59,6 +59,7 @@ class LifeCycle extends Component<Props> {
 	}
 	// 必须实现的方法render() 并且是个纯函数
 	render() {
+		console.log('LifeCycle--render');
 		return (
 			<div>
 				<h4>演示生命周期函数</h4>

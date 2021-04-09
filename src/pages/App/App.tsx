@@ -7,10 +7,11 @@ import HttpRequest from '../HttpRequest/HttpRequest';
 import { Provider } from 'react-redux';
 import UseHooks from '../UseHooks/UseHooks';
 import UseRedux from '../UseRedux/UseRedux';
-import UseAntd from '../UseAntd/UseAntd';
-import {store} from '../../redux';
-import {context, contextContent } from '../context';
+import { store } from '../../redux';
+import Base from '../Base/Base';
+import { MyContext, defaultContext } from '../context';
 import UseContext from '../UseContext/UseContext';
+import UseAntd from '../UseAntd/UseAntd';
 
 const history = createBrowserHistory();
 
@@ -35,13 +36,14 @@ class App extends Component {
 		return (
 			<div className="App">
 				<input type="text"/>
-				<context.Provider value={contextContent}>
-					{/* Context的用法一 */}
+				<MyContext.Provider value={defaultContext}>
+						{/* Context的用法一 */}
 					{/* <context.Consumer>
 						{value=><UseContext {...value}></UseContext>}
 					</context.Consumer> */}
 					<UseContext></UseContext>
-				</context.Provider>
+					<UseContext></UseContext>
+				</MyContext.Provider>
 				<Router history={history}>
 					<Link to="/life-cycle">生命周期</Link>
 					<Link to="/http-request">网络请求</Link>
@@ -59,6 +61,7 @@ class App extends Component {
 					<UseRedux />
 				</Provider>
 				<UseAntd></UseAntd>  
+				<Base></Base>
 			</div>
 		);
 	}

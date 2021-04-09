@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { context } from '../context';
+import { MyContext } from '../context';
 
 class UseContext extends Component{
-  static contextType=context;
+  static contextType=MyContext;
   render() {
     console.log(this.context);
     return (
