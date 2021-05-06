@@ -1,7 +1,7 @@
-import React, { Dispatch, useState} from 'react';
+import React, { Dispatch} from 'react';
 import {connect} from 'react-redux';
 import { GoodType } from '../../redux/goods/actionType';
-import {addGoodAction,deteleGoodAction} from '../../redux/goods/action'
+import {addGoodAction,deteleGoodAction} from '../../redux/goods/action';
 
 
 const UseRedux = function(props:any) {

@@ -38,11 +38,10 @@ class App extends Component {
 				<input type="text"/>
 				<MyContext.Provider value={defaultContext}>
 						{/* Context的用法一 */}
-					{/* <context.Consumer>
+					<MyContext.Consumer>
 						{value=><UseContext {...value}></UseContext>}
-					</context.Consumer> */}
-					<UseContext></UseContext>
-					<UseContext></UseContext>
+					</MyContext.Consumer>
+					{/* <UseContext></UseContext> */}
 				</MyContext.Provider>
 				<Router history={history}>
 					<Link to="/life-cycle">生命周期</Link>
