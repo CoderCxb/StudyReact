@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { Component, createRef, forwardRef } from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import LifeCycle from '../LifeCycle/LifeCycle';
@@ -21,7 +21,13 @@ class App extends Component {
 	goLifeCycle = () => {
 		history.push('/life-cycle');
 	};
+	base = createRef();
+	componentDidMount() {
+		console.log(this.base);
+	}
 	render() {
+		const NewBase = forwardRef(Base);
+		console.log(NewBase);
 		return (
 			<div className="App">
 				<MyContext.Provider value={defaultContext}>
@@ -43,7 +49,7 @@ class App extends Component {
 				<Provider store={store}>
 					<UseRedux />
 				</Provider>
-				<Base></Base>
+				<NewBase ref={this.base}></NewBase>
 			</div>
 		);
 	}

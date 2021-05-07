@@ -6,7 +6,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { context, contextContent } from '../context';
+import { MyContext, defaultContext } from '../context';
 
 export default function UseHooks() {
 	// useState 用于添加内部state 返回值是数组[state值,设置state函数] 可接受泛型
@@ -19,15 +19,14 @@ export default function UseHooks() {
 	// 尽可能使用标准的 useEffect 以避免阻塞视觉更新。
 	useLayoutEffect(() => {
 		console.log('useLayoutEffect监听count++:', count);
-		
 	});
-	
+
 	// useEffect 用于监听某个state的改变,并且是延迟执行
-	let xx=useEffect(() => {
+	let xx = useEffect(() => {
 		console.log('useEffect监听count++:', count);
-		return ()=>{
-			console.log("XXX");
-		}
+		return () => {
+			console.log('XXX');
+		};
 	});
 	console.log(xx);
 	function addBook() {
@@ -36,7 +35,7 @@ export default function UseHooks() {
 		// });
 		setBooks([...books, inputBook.current.value]);
 	}
-	const uContext = useContext(context);
+	const uContext = useContext(MyContext);
 	function update() {
 		uContext.frame = 'vue';
 	}
