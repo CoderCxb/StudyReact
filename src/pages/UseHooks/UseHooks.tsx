@@ -1,17 +1,27 @@
 import React, {
+	createRef,
+	forwardRef,
 	MutableRefObject,
 	useContext,
 	useEffect,
+	useImperativeHandle,
 	useLayoutEffect,
+	useMemo,
 	useRef,
 	useState,
 } from 'react';
-import { MyContext, defaultContext } from '../context';
+import { MyContext } from '../context';
 
 export default function UseHooks() {
 	// useState 用于添加内部state 返回值是数组[state值,设置state函数] 可接受泛型
 	const [count, setCount] = useState<number>(0);
 	const [books, setBooks] = useState<string[]>([]);
+	// 使用
+	function addBook() {
+		setBooks((preState) => {
+			return [...preState, inputBook.current.value];
+		});
+	}
 	// useRef 用于获取页面DOM元素
 	const inputBook: MutableRefObject<HTMLInputElement> = useRef(null as any);
 
@@ -21,26 +31,45 @@ export default function UseHooks() {
 		console.log('useLayoutEffect监听count++:', count);
 	});
 
+	// 类似于计算属性 当第二个参数的依赖发生改变时 触发更新 否则使用缓存
+	let cacheData = useMemo(() => {
+		console.log(count, books);
+		return `${count} ${books.join('-')}`;
+	}, []);
+
 	// useEffect 用于监听某个state的改变,并且是延迟执行
-	let xx = useEffect(() => {
+	// useEffect 可以当作三个周期函数
+	// 1. componentDidUpdate 即不接受参数时
+	// 2. componentDidMounted 第二个参数接收一个[]
+	// 3. componentWillUnmount useEffect返回一个函数时 该函数在组件卸载时执行
+	useEffect(() => {
 		console.log('useEffect监听count++:', count);
 		return () => {
 			console.log('XXX');
 		};
-	});
-	console.log(xx);
-	function addBook() {
-		// setBooks((preState) => {
-		// 	return [...preState, inputBook.current.value];
-		// });
-		setBooks([...books, inputBook.current.value]);
-	}
+	}, [count]);
+	useEffect(() => {
+		console.log('effect2执行');
+	}, []);
+
 	const uContext = useContext(MyContext);
 	function update() {
 		uContext.frame = 'vue';
 	}
+	let ul = createRef<any>();
+	// console.log(ul);
+
+	// useImperativeHandle配合useRef/createRef 以及forwardRef
+	// 使得父元素可以获取到函数组件上的方法
+	const HookSonComponent = forwardRef(HookSon);
+	let hs = useRef();
+	useEffect(() => {
+		console.log(hs);
+	}, []);
+
 	return (
 		<div>
+			<HookSonComponent ref={hs} count={count}></HookSonComponent>
 			<div>
 				<button
 					onClick={() => {
@@ -52,7 +81,9 @@ export default function UseHooks() {
 			</div>
 			<div>当前计数:{count}</div>
 
-			<ul>
+			<p>useMemo--类似于计算属性:{cacheData}</p>
+
+			<ul ref={ul}>
 				{books.map((book) => (
 					<li key={book}>{book}</li>
 				))}
@@ -69,4 +100,20 @@ export default function UseHooks() {
 			<button onClick={update}>升级</button>
 		</div>
 	);
+}
+
+// 子组件接收第二个参数 ref 接收 forwardRef传递的ref
+function HookSon(props: any, ref: any) {
+	console.log(props, ref);
+
+	let inputRef = useRef<any>();
+
+	// useImperativeHandle 暴露指定的方法和数据给ref
+	useImperativeHandle(ref, () => ({
+		str: 'HS',
+		focus: () => {
+			inputRef.current.focus();
+		},
+	}));
+	return <button ref={inputRef}>HookSon's Button</button>;
 }
