@@ -1,16 +1,22 @@
 import { GoodActionTypes, GoodType } from './actionType';
 function addGoodAction(good: GoodType) {
-  return {
-    type: GoodActionTypes.ADD_GOOD,
-    good
-  }
+	return {
+		type: GoodActionTypes.ADD_GOOD,
+		good,
+	};
 }
 
 function deteleGoodAction(id: number) {
-  return {
-    type: GoodActionTypes.DELETE_GOOD,
-    id
-  }
+	return {
+		type: GoodActionTypes.DELETE_GOOD,
+		id,
+	};
 }
 
-export { addGoodAction, deteleGoodAction }
+function clearGoodAction() {
+	return {
+		type: GoodActionTypes.CLEAR_GOOD,
+	};
+}
+
+export { addGoodAction, deteleGoodAction, clearGoodAction };

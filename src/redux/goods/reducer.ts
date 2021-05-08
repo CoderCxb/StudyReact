@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { GoodActionType, GoodActionTypes, GoodType } from './actionType';
 const initState: Array<GoodType> = [];
 function goods(state = initState, action: GoodActionType) {
@@ -10,6 +9,10 @@ function goods(state = initState, action: GoodActionType) {
 		case GoodActionTypes.DELETE_GOOD: {
 			const newState = state.filter((good) => good?.id !== action?.id);
 			return newState;
+		}
+		case GoodActionTypes.CLEAR_GOOD: {
+			console.log('清空');
+			return [];
 		}
 		default:
 			return state;
