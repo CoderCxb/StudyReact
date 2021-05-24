@@ -12,6 +12,7 @@ import Base from '../Base/Base';
 import { MyContext, defaultContext } from '../context';
 import UseContext from '../UseContext/UseContext';
 import UseAntd from '../UseAntd/UseAntd';
+import RenderProps from '../RenderProps/RenderProps';
 
 const history = createBrowserHistory();
 
@@ -65,6 +66,7 @@ class App extends Component {
 				</Provider>
 				<UseAntd></UseAntd>
 				<Base></Base>
+				<RenderProps></RenderProps>
 			</div>
 		);
 	}
