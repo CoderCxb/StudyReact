@@ -44,8 +44,9 @@ export default function UseHooks() {
 	// 3. componentWillUnmount useEffect返回一个函数时 该函数在组件卸载时执行
 	useEffect(() => {
 		console.log('useEffect监听count++:', count);
+		// 返回函数 在组件卸载时调用
 		return () => {
-			console.log('XXX');
+			console.log('组件卸载时调用');
 		};
 	}, [count]);
 	useEffect(() => {
