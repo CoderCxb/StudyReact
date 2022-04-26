@@ -65,9 +65,13 @@ export default function UseHooks() {
 	const HookSonComponent = forwardRef(HookSon);
 	let hs = useRef();
 	useEffect(() => {
-		console.log(hs);
+		console.log('hs', hs);
 	}, []);
-
+	useEffect(()=>{
+		return ()=>{
+			console.log('unmount???');
+		}
+	})
 	return (
 		<div>
 			<HookSonComponent ref={hs} count={count}></HookSonComponent>
