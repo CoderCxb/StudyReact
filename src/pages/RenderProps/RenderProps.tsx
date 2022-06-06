@@ -1,3 +1,5 @@
+import React from 'react'
+
 function Test(props){
   let {render}=props;
   let title='Render Props';

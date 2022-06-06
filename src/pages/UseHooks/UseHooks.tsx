@@ -24,13 +24,13 @@ export default function UseHooks() {
 	}
 	// useRef 用于获取页面DOM元素
 	const inputBook: MutableRefObject<HTMLInputElement> = useRef(null as any);
-
+	
 	// useLayoutEffect 与useEffect 相同，但它会在所有的 DOM 变更之后同步调用 effect。可以使用它来读取 DOM 布局并同步触发重渲染。在浏览器执行绘制之前，useLayoutEffect 内部的更新计划将被同步刷新。
 	// 尽可能使用标准的 useEffect 以避免阻塞视觉更新。
 	useLayoutEffect(() => {
 		console.log('useLayoutEffect监听count++:', count);
 	});
-
+	
 	// 类似于计算属性 当第二个参数的依赖发生改变时 触发更新 否则使用缓存
 	let cacheData = useMemo(() => {
 		console.log(count, books);
@@ -42,8 +42,9 @@ export default function UseHooks() {
 	// 1. componentDidUpdate 即不接受参数时
 	// 2. componentDidMounted 第二个参数接收一个[]
 	// 3. componentWillUnmount useEffect返回一个函数时 该函数在组件卸载时执行
-	useEffect(() => {
-		console.log('useEffect监听count++:', count);
+	useLayoutEffect(() => {
+		console.log('useEffect监听count改变:', count);
+		// setTitle(title + 1)
 		// 返回函数 在组件卸载时调用
 		return () => {
 			console.log('组件卸载时调用');
@@ -71,7 +72,8 @@ export default function UseHooks() {
 		return ()=>{
 			console.log('unmount???');
 		}
-	})
+	});
+
 	return (
 		<div>
 			<HookSonComponent ref={hs} count={count}></HookSonComponent>

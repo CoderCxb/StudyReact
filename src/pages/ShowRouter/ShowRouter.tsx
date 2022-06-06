@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Link, RouteComponentProps } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 interface Props {
 	title: string;
 }
@@ -11,8 +11,8 @@ export default function ShowRouter(routeProps: Props) {
 			<Link to="/show-router/son1">跳转1</Link>
 			<Link to="/show-router/son2">跳转2</Link>
 
-			<Route path="/show-router/son1" component={Son1}></Route>
-			<Route path="/show-router/son2" component={Son2}></Route>
+			<Route path="/show-router/son1" element={<Son1 />}></Route>
+			<Route path="/show-router/son2" element={<Son2 />}></Route>
 		</div>
 	);
 }
